@@ -12,15 +12,12 @@ import datetime
 import time
 #from datetime import datetime, date, timedelta
 from PIL import Image
+import PIL.ImageOps
 import numpy as np
 import calendar
 #import PhenoCamUtils as pcu
 import matplotlib.pyplot as plt
 import argparse
-
-
-STARTDIR = "/data/archive"
-OUTDIR = "/home/margaret/processing/slices"
 
 ###############################################################################
 
@@ -120,7 +117,7 @@ def fn2datetime(sitename, filename, irFlag=False):
 
 ##################################################################################################
 
-def getFirstImagePath(sitename, irFlag=False):
+def getFirstImagePath(sitename, path, irFlag=False):
     """
     Find date of first image file for this site.
 
@@ -129,7 +126,7 @@ def getFirstImagePath(sitename, irFlag=False):
     routine to get dbinfo for single site!
     """
 
-    sitepath=os.path.join(STARTDIR,sitename)
+    sitepath=os.path.join(path,sitename)
 
     if irFlag:
         sitename = sitename + '_IR'
@@ -148,7 +145,7 @@ def getFirstImagePath(sitename, irFlag=False):
 
 ##################################################################################################
 
-def getLastImagePath(sitename, irFlag=False):
+def getLastImagePath(sitename, path, irFlag=False):
     """
     Find date of first image file for this site.
 
@@ -157,7 +154,7 @@ def getLastImagePath(sitename, irFlag=False):
     routine to get dbinfo for single site!
     """
 
-    sitepath=os.path.join(STARTDIR,sitename)
+    sitepath=os.path.join(path,sitename)
 
     if irFlag:
         sitename = sitename + '_IR'
@@ -176,7 +173,7 @@ def getLastImagePath(sitename, irFlag=False):
 
 ##################################################################################################
 
-def getDayImageList(sitename,year,month,day,irFlag=False):
+def getDayImageList(sitename,year,month,day,path,irFlag=False):
     """
     Given a site, year, month and day return a list of archive image
     paths. If irFlag is True then get the IR images only.  We're just
@@ -196,7 +193,7 @@ def getDayImageList(sitename,year,month,day,irFlag=False):
     # set path base
     yrstr="%2.2d" % (year,)
     mostr="%2.2d" % (month,)
-    imdir = os.path.join(STARTDIR,sitename,yrstr,mostr)
+    imdir = os.path.join(path,sitename,yrstr,mostr)
     if dbgFlg:
         print "imdir: " + imdir
     
@@ -220,13 +217,13 @@ def getDayImageList(sitename,year,month,day,irFlag=False):
 
 ##################################################################################################
 
-def getMiddayImage(sitename,year,month,day,irFlag=False):
+def getMiddayImage(sitename,year,month,day,path,irFlag=False):
     """
     Get the list of images for a particular day and return the
     one closest to midday.
     """
     
-    imlist = getDayImageList(sitename, year, month, day, irFlag=irFlag)
+    imlist = getDayImageList(sitename, year, month, day, path, irFlag=irFlag)
 
     # check for empty list
     if len(imlist) == 0:
@@ -248,7 +245,7 @@ def getMiddayImage(sitename,year,month,day,irFlag=False):
 
 ##################################################################################################
 
-def getMidDayImageList(sitename, irFlag=False):
+def getMidDayImageList(sitename, path, irFlag=False):
     """
     Get List of Mid-day images for this site.
     """
@@ -256,12 +253,12 @@ def getMidDayImageList(sitename, irFlag=False):
     midDayList=[]
 
     # get date of first image
-    firstPath = getFirstImagePath(sitename, irFlag=irFlag)
+    firstPath = getFirstImagePath(sitename, path, irFlag=irFlag)
     firstDT = fn2datetime(sitename, os.path.basename(firstPath),irFlag=irFlag)
     firstDate = firstDT.date()
     
     # get last image path
-    lastPath = getLastImagePath(sitename, irFlag=irFlag)
+    lastPath = getLastImagePath(sitename, path, irFlag=irFlag)
     lastDT = fn2datetime(sitename,os.path.basename(lastPath),irFlag=irFlag)
     lastDate = lastDT.date()
 
@@ -271,7 +268,7 @@ def getMidDayImageList(sitename, irFlag=False):
         year = myDate.year
         month = myDate.month
         day = myDate.day
-        middayimg = getMiddayImage(sitename,year,month,day,irFlag=irFlag);
+        middayimg = getMiddayImage(sitename,year,month,day,path,irFlag=irFlag);
 
         midDayList.append(middayimg)
         
@@ -280,197 +277,232 @@ def getMidDayImageList(sitename, irFlag=False):
     return midDayList
 
 
+def resize_image(img):
+    imagewidth = img.size[0]
+    imageheight = img.size[1]
+
+    # check sizing
+    # calculate aspect ratio
+    aspect = float(imagewidth)/float(imageheight)
+    resize = False
+    # normal, square, or tall&skinny
+    if aspect<=1.35 and imageheight>600:
+        newheight=600
+        newwidth=int(600*float(imagewidth)/float(imageheight))
+        resize = True
+    # wide
+    elif imagewidth>720:
+        newwidth=720
+        newheight=int(720*float(imageheight)/float(imagewidth))
+        resize = True
+
+    # resize image if necessary
+    if resize:
+        ready_image = img.resize((newwidth,newheight),PIL.Image.ANTIALIAS)
+    else:
+        ready_image = img
+
+    return ready_image    
+
 
 
 
 # --- MAIN ---
 
 # set up argument processing
-parser = argparse.ArgumentParser()
-parser.add_argument("-v","--verbose",
-                    help="increase output verbosity",
-                    action="store_true",
-                    default=False)
-parser.add_argument("-c","--centerline",
-                    type=int,
-                    help="center line/column from image",
-                    default=None)
+#parser = argparse.ArgumentParser()
+#parser.add_argument("-v","--verbose",
+#                    help="increase output verbosity",
+#                    action="store_true",
+#                    default=False)
+#parser.add_argument("-c","--centerline",
+#                    type=int,
+#                    help="center line/column from image",
+#                    default=None)
 
 # positional arguments
-parser.add_argument("site",help="phenocam site name")
-parser.add_argument("year",help="year",type=int)
+#parser.add_argument("site",help="phenocam site name")
+#parser.add_argument("year",help="year",type=int)
 
-args = parser.parse_args()
-sitename = args.site
-outyear = args.year
-verbose = args.verbose
+#args = parser.parse_args()
 
-cl_col = None
-if args.centerline:
-    cl_col = args.centerline
 
-if verbose:
-    print "site: {0}".format(sitename)
-    print "year: {0}".format(outyear)
-    if cl_col:
-        print "column: {0}".format(cl_col)
+def create_one_slice(sitename,outyear,imagesdir,outslicedir):
 
-# get list of midday images for this site
-imglist = getMidDayImageList(sitename,irFlag=False)
+    verbose = False
+    
+    cl_col = None
+    #if args.centerline:
+    #    cl_col = args.centerline
 
-# set up yearly images
-nimage = len(imglist)
-img_first = imglist[0]
-fn_first = os.path.basename(img_first)
-dt_first = fn2datetime(sitename,fn_first)
-yr_first = dt_first.year
+    if verbose:
+        print "site: {0}".format(sitename)
+        print "year: {0}".format(outyear)
+        if cl_col:
+            print "column: {0}".format(cl_col)
 
-img_last = imglist[nimage-1]
-fn_last = os.path.basename(img_last)
-dt_last = fn2datetime(sitename,fn_last)
-yr_last = dt_last.year
+    # get list of midday images for this site
+    imglist = getMidDayImageList(sitename,imagesdir,irFlag=False)
 
-# check requested year
-if (outyear < yr_first) or (outyear > yr_last):
-    sys.stderr.write("no data for requested year\n")
-    sys.exit(1)
+    # set up yearly images
+    nimage = len(imglist)
+    img_first = imglist[0]
+    fn_first = os.path.basename(img_first)
+    dt_first = fn2datetime(sitename,fn_first)
+    yr_first = dt_first.year
 
-# figure out number of days in this year
-ndays_td = datetime.datetime(outyear+1, 1, 1, 0, 0, 0) - \
-           datetime.datetime(outyear, 1, 1, 0, 0, 0)
-ndays = ndays_td.days
+    img_last = imglist[nimage-1]
+    fn_last = os.path.basename(img_last)
+    dt_last = fn2datetime(sitename,fn_last)
+    yr_last = dt_last.year
 
-# open output file for keeping track of doys with images
-outtxt_dir = OUTDIR
-outtxt_name = "{0}_{1}_slice.txt".format(sitename, outyear)
-outtxt_path = os.path.join(outtxt_dir,outtxt_name)
-textout = open(outtxt_path,'w')
+    # check requested year
+    if (outyear < yr_first) or (outyear > yr_last):
+        sys.stderr.write("no data for requested year: "+sitename+","+
+                         str(outyear)+"\n")
+        #sys.exit(1)
+        return
 
-# initialize image height
-nrow = 0
+    # figure out number of days in this year
+    ndays_td = datetime.datetime(outyear+1, 1, 1, 0, 0, 0) - \
+               datetime.datetime(outyear, 1, 1, 0, 0, 0)
+    ndays = ndays_td.days
 
-# set up counter for this year
-icount = 0
-for imgpath in imglist:
+    # open output file for keeping track of doys with images
+    outtxt_dir = outslicedir
+    outtxt_name = "{0}_{1}_slice.txt".format(sitename, outyear)
+    outtxt_path = os.path.join(outtxt_dir,outtxt_name)
+    textout = open(outtxt_path,'w')
 
-    # imglist has a blank path for missing days
-    if imgpath == '':
-        continue
+    # initialize image height
+    nrow = 0
 
-    # get image date info
-    imgfile = os.path.basename(imgpath)
-    imgdt = fn2datetime(sitename,imgfile)
-    imgdate = imgdt.date()
+    # set up counter for this year
+    icount = 0
+    for imgpath in imglist:
 
-    imgdoy = date2doy(imgdate.year, imgdate.month, imgdate.day)
-    imgyear = imgdate.year
+        # imglist has a blank path for missing days
+        if imgpath == '':
+            continue
 
-    # only look at this year's images
-    if imgyear < outyear:
-        continue
-    elif imgyear > outyear:
-        break
+        # get image date info
+        imgfile = os.path.basename(imgpath)
+        imgdt = fn2datetime(sitename,imgfile)
+        imgdate = imgdt.date()
 
-    # try to read in image
-    try: 
-        img = Image.open(imgpath)
-        img.load()
-    except:
-        errstr1 = "Unable to open file: {0}\n".format(imgpath)
-        errstr2 = "Skipping this file.\n"
-        sys.stderr.write(errstr1)
-        sys.stderr.write(errstr2)
-        continue
+        imgdoy = date2doy(imgdate.year, imgdate.month, imgdate.day)
+        imgyear = imgdate.year
 
-    # initialize some things if this is the first image
-    # we could read.
-    if icount == 0:
+        # only look at this year's images
+        if imgyear < outyear:
+            continue
+        elif imgyear > outyear:
+            break
 
-        # ncol, nrow are the dimensions of this image
-        [ncol, nrow] = img.size
+        # try to read in image
+        try: 
+            img = Image.open(imgpath)
+            img.load()
+        except:
+            errstr1 = "Unable to open file: {0}\n".format(imgpath)
+            errstr2 = "Skipping this file.\n"
+            sys.stderr.write(errstr1)
+            sys.stderr.write(errstr2)
+            continue
 
-        if verbose:
-            print "first image: {0}".format(imgpath)
-            print "size: {0} x {1}".format(ncol, nrow)
+        # initialize some things if this is the first image
+        # we could read.
+        if icount == 0:
+
+            # ncol, nrow are the dimensions of this image
+            [ncol, nrow] = img.size
+
+            if verbose:
+                print "first image: {0}".format(imgpath)
+                print "size: {0} x {1}".format(ncol, nrow)
 
             
-        # if cl_col is not set use middle of image
-        if not cl_col:
-            cl_col = int(float(ncol)/2.)
+            # if cl_col is not set use middle of image
+            if not cl_col:
+                cl_col = int(float(ncol)/2.)
             
-        # check that requested cl_col is within range
-        if (cl_col < 0) or (cl_col > ncol):
-            sys.stderr.write("requested centerline is out of range\n")
-            sys.exit(1)
+            # check that requested cl_col is within range
+            if (cl_col < 0) or (cl_col > ncol):
+                sys.stderr.write("requested centerline is out of range\n")
+                sys.exit(1)
 
-        # initialize output array 
-        # Make it 4 pixels wide per day
-        outarr = np.zeros((nrow, ndays*4, 3),dtype=np.int8)
-        #outarr[0:nrow, 0:ncol, :] = (100, 0, 0)
+            # initialize output array 
+            # Make it 4 pixels wide per day
+            outarr = np.zeros((nrow, ndays*4, 3),dtype=np.int8)
+            #outarr[0:nrow, 0:ncol, :] = (100, 0, 0)
         
-    icount += 1
+        icount += 1
 
-    # write doy to the text file
-    textout.write(str(imgdoy[1])+"\n")
+        # write doy to the text file
+        textout.write(str(imgdoy[1])+"\n")
 
-    # check if size has changed
-    [nc, nr] = img.size
-    if (nr != nrow) or (nc != ncol):
-        sys.stderr.write("Warning: image size changed.\n")
+        # check if size has changed
+        [nc, nr] = img.size
+        if (nr != nrow) or (nc != ncol):
+            sys.stderr.write("Warning: image size changed.\n")
         
-    # read in 
-    imarr = np.asarray(img)
+        # read in 
+        imarr = np.asarray(img)
 
-    # make sure cl_col is still valid
-    if cl_col > nc:
-        # use mid column of this image
-        midcol = nc/2
-        colarr = imarr[:,midcol,:]
-    else:
-        colarr = imarr[:,cl_col,:]
+        # make sure cl_col is still valid
+        if cl_col > nc:
+            # use mid column of this image
+            midcol = nc/2
+            colarr = imarr[:,midcol,:]
+        else:
+            colarr = imarr[:,cl_col,:]
 
-    # insert column into output array
-    #column_index = imgdoy[1]-1
-    column_index = icount-1
-    if nr < nrow:
-        rowdiff = nrow - nr
-        rowstart = rowdiff
-        outarr[rowstart:nrow,column_index*4,:]=colarr[:,:]
-        outarr[rowstart:nrow,column_index*4+1,:]=colarr[:,:]
-        outarr[rowstart:nrow,column_index*4+2,:]=colarr[:,:]
-        outarr[rowstart:nrow,column_index*4+3,:]=colarr[:,:]
+        # insert column into output array
+        #column_index = imgdoy[1]-1
+        column_index = icount-1
+        if nr < nrow:
+            rowdiff = nrow - nr
+            rowstart = rowdiff
+            outarr[rowstart:nrow,column_index*4,:]=colarr[:,:]
+            outarr[rowstart:nrow,column_index*4+1,:]=colarr[:,:]
+            outarr[rowstart:nrow,column_index*4+2,:]=colarr[:,:]
+            outarr[rowstart:nrow,column_index*4+3,:]=colarr[:,:]
 
-    elif nr > nrow:
-        rowdiff = nr - nrow
-        rowstart = rowdiff
-        outarr[:,column_index*4,:] = colarr[rowstart:nr+1,:]
-        outarr[:,column_index*4+1,:] = colarr[rowstart:nr+1,:]
-        outarr[:,column_index*4+2,:] = colarr[rowstart:nr+1,:]
-        outarr[:,column_index*4+3,:] = colarr[rowstart:nr+1,:]
+        elif nr > nrow:
+            rowdiff = nr - nrow
+            rowstart = rowdiff
+            outarr[:,column_index*4,:] = colarr[rowstart:nr+1,:]
+            outarr[:,column_index*4+1,:] = colarr[rowstart:nr+1,:]
+            outarr[:,column_index*4+2,:] = colarr[rowstart:nr+1,:]
+            outarr[:,column_index*4+3,:] = colarr[rowstart:nr+1,:]
 
-    else:
-        outarr[0:nrow,column_index*4,:]=colarr[:,:]
-        outarr[0:nrow,column_index*4+1,:]=colarr[:,:]
-        outarr[0:nrow,column_index*4+2,:]=colarr[:,:]
-        outarr[0:nrow,column_index*4+3,:]=colarr[:,:]
+        else:
+            outarr[0:nrow,column_index*4,:]=colarr[:,:]
+            outarr[0:nrow,column_index*4+1,:]=colarr[:,:]
+            outarr[0:nrow,column_index*4+2,:]=colarr[:,:]
+            outarr[0:nrow,column_index*4+3,:]=colarr[:,:]
 
-# crop out the days that didn't have images
-#croparr = np.zeros((nrow, icount*4, 3),dtype=np.int8)
-croparr = outarr[0:nrow,0:icount*4,:]
+    # crop out the days that didn't have images
+    #croparr = np.zeros((nrow, icount*4, 3),dtype=np.int8)
+    croparr = outarr[0:nrow,0:icount*4,:]
 
-# make output image
-outimg = Image.fromarray(croparr,'RGB')
+    # make output image
+    origimg = Image.fromarray(croparr,'RGB')
 
-# save this image
-#outimg_dir = os.path.join(STARTDIR,sitename,'ROI')
-outimg_dir = OUTDIR
-outimg_name = "{0}_{1}_slice.png".format(sitename, outyear)
-outimg_path = os.path.join(outimg_dir,outimg_name)
-outimg.save(outimg_path)
+    # resize if necessary
+    outimg = resize_image(origimg)
 
-# close the text file
-textout.close()
+    # save this image
+    #outimg_dir = os.path.join(STARTDIR,sitename,'ROI')
+    outimg_dir = outslicedir
+    outimg_name = "{0}_{1}_slice.png".format(sitename, outyear)
+    outimg_path = os.path.join(outimg_dir,outimg_name)
+    outimg.save(outimg_path)
 
+    # close the text file
+    textout.close()
+
+    return
 
 # okay stretch image so that x-axis is longer
 # this is the time axis ...

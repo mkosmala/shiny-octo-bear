@@ -7,13 +7,14 @@ from PIL import Image
 import PIL.ImageOps
 
 
-if len(sys.argv) < 4 :
-    print ("format: process_image_files <image_file> <roi_dir> <output_dir> <output_file>")
+if len(sys.argv) < 6 :
+    print ("format: process_image_files <image_file> <roi_dir> <masked_output_dir> <unmasked_output_dir> <output_file>")
     exit(1)
 imagefilename = sys.argv[1]
 roidir = sys.argv[2]
-outputdir = sys.argv[3]
-outputfilename = sys.argv[4]
+outputdir1 = sys.argv[3]
+outputdir2 = sys.argv[4]
+outputfilename = sys.argv[5]
 
 # level of transparency (0=opaque,1=fully transparent)
 transparency = 0.25
@@ -27,7 +28,7 @@ with open(imagefilename,'r') as imagefile, open(outputfilename,'w') as ofile:
     # write header line
     ofile.write("site,veg_type,date,masked_image\n")
 
-    # all black and white for the composite
+    # initialize all black and white for the composite
     allblack = Image.new("RGB",(1296,960),"black")
     
     # for speed, keep track of mask properties
@@ -51,9 +52,19 @@ with open(imagefilename,'r') as imagefile, open(outputfilename,'w') as ofile:
         imageheight = img.size[1]
 
         # check sizing
-        if imagewidth != 1296 or imageheight != 960: 
-            print "Warning: non-standard image size: " + str(img.size)
-            print line  
+        # calculate aspect ratio
+        aspect = float(imagewidth)/float(imageheight)
+        resize = False
+        # normal, square, or tall&skinny
+        if aspect<=1.35 and imageheight>600:
+            newheight=600
+            newwidth=int(600*float(imagewidth)/float(imageheight))
+            resize = True
+        # wide
+        elif imagewidth>720:
+            newwidth=720
+            newheight=int(720*float(imageheight)/float(imagewidth))
+            resize = True
             
         # get the mask size and resize if necessary
         if newmask != mask:
@@ -81,21 +92,34 @@ with open(imagefilename,'r') as imagefile, open(outputfilename,'w') as ofile:
         # apply the mask to the image
         outimg = Image.composite(img,allblack,invimg)
 
-        # create output filename from output dir and image name
+        # resize masked and unmasked images
+        if resize:
+            ready_masked_image = outimg.resize((newwidth,newheight),PIL.Image.ANTIALIAS)
+            ready_unmasked_image = img.resize((newwidth,newheight),PIL.Image.ANTIALIAS)
+        else:
+            ready_masked_image = outimg
+            ready_unmasked_image = img
+
+        # create output filenames from output dir and image name
         # will store them by site and year
         innameparts = image.split('/')
         fileroot = innameparts[-1].split('.')
         filerootparts = fileroot[0].split('_')
         siteyear = filerootparts[0] + "/" + filerootparts[1] + "/"
-        outfilename = outputdir + siteyear + fileroot[0] + "_masked_" + maskname + ".jpg"
+        maskedoutfilename = outputdir1 + siteyear + fileroot[0] + "_masked_" + maskname + ".jpg"
+        unmaskedoutfilename = outputdir2 + siteyear + fileroot[0] + "_unmasked.jpg"
 
-        # create directory if needed and save
-        if not os.path.exists(outputdir + siteyear):
-            os.makedirs(outputdir + siteyear)  
-        outimg.save(outfilename)
+        # create directories if needed and save
+        if not os.path.exists(outputdir1 + siteyear):
+            os.makedirs(outputdir1 + siteyear)  
+        ready_masked_image.save(maskedoutfilename)
 
-        # record it
-        outline = tokens[0] + "," + tokens[2] + "," + tokens[1] + "," + outfilename + "\n"
+        if not os.path.exists(outputdir2 + siteyear):
+            os.makedirs(outputdir2 + siteyear)
+        ready_unmasked_image.save(unmaskedoutfilename)
+            
+        # record the masked file
+        outline = tokens[0] + "," + tokens[2] + "," + tokens[1] + "," + maskedoutfilename + "\n"
         ofile.write(outline)
                 
         
