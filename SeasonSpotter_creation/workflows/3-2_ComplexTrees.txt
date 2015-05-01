@@ -1,0 +1,192 @@
+{
+  "badimage": {
+      "type": "single",
+      "required": true,
+      "question": "Do you have a clear view of an outdoor landscape?",
+      "answers": [
+         {"value": true,
+          "label": "Yes",
+          "next": "weather" },
+         {"value": false,
+          "label": "No",
+          "next": "whybad"}
+      ],
+      "help": "Choose **yes** if you can see enough of the landscape to answer questions about it.\n\nChoose **no** if the image is blurry or foggy, the image is obscured by something, the image is indoors, or you cannot see the landscape well for any other reason."
+   },
+   "whybad": {
+      "type": "single",
+      "required": true,
+      "question": "What is the problem with this image?",
+      "answers": [
+         {"value": "weather",
+          "label": "The lens is covered with rain or snow or it is too foggy", 
+          "next": null },
+         {"value": "blurry",
+          "label": "The image is blurry, overexposed, or too dark", 
+          "next": null },
+         {"value": "building",
+          "label": "The image is inside a building", 
+          "next": null },
+         {"value": "other",
+          "label": "The image is bad for another reason", 
+          "next": null }
+      ]
+   },
+   "weather": {
+      "type": "single",
+      "required": true,
+      "question": "What is the weather?",
+      "answers": [
+         {"value": "clear",
+          "label": "Clear skies",
+          "next": "snow" },
+         {"value": "partlycloudy",
+          "label": "Partly cloudy",
+          "next": "snow" },
+         {"value": "overcast",
+          "label": "Overcast",
+          "next": "snow" },
+         {"value": "foggy",
+          "label": "Foggy",
+          "next": "snow" },
+         {"value": "rain",
+          "label": "Raining",
+          "next": "snow" },
+         {"value": "snow",
+          "label": "Snowing",
+          "next": "snow" }
+      ]
+   },
+   "snow": {
+      "type": "single",
+      "required": true,
+      "question": "Is there snow?",
+      "answers": [
+         {"value": "no",
+          "label": "No",
+          "next": "broadleaf" },
+         {"value": "trees",
+          "label": "Yes, on the trees",
+          "next": "broadleaf" },
+         {"value": "ground",
+          "label": "Yes, on the ground, but not the tress",
+          "next": "broadleaf" }
+      ]
+     },
+   "broadleaf": {
+      "type": "drawing",
+      "instruction": "Circle trees that have BROAD leaves. If there are many, mark at least five. If there are none, click Next",
+      "tools": [
+         {"value": "broadleaf",
+          "label": "Broad-leaf trees",
+          "type": "ellipse",
+          "color": "#FF0000"}
+      ],
+      "help": "Trees can have **broad** leaves or **needle** leaves. Please circle trees with **broad** leaves here. Example:\n\n ![broad_leaves](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/broad_leaves_small.jpg)",
+      "next": "needleleaf"
+   },
+   "needleleaf": {
+      "type": "drawing",
+      "instruction": "Circle trees that have NEEDLE leaves. If there are many, mark at least five. If there are none, click Next",
+      "tools": [
+         {"value": "needleleaf",
+          "label": "Needle-leaf trees",
+          "type": "ellipse",
+          "color": "#FF9933"}
+      ],
+      "help": "Trees can have **needle** leaves or **broad** leaves. Please circle trees with **needle** leaves here. Example:\n\n ![needle_leaves](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/needle_leaves_small.jpg)",
+      "next": "noleaf"
+   },
+   "noleaf": {
+      "type": "drawing",
+      "instruction": "Circle trees that have NO leaves. If there are many, mark at least five. If there are none, click Next",
+      "tools": [
+         {"value": "noleaf",
+          "label": "Trees with no leaves",
+          "type": "ellipse",
+          "color": "#FFFFFF"}
+      ],
+      "help": "Circle trees that have no leaves on them. Example:\n\n ![no_leaves](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/no_leaves_small.jpg)",
+      "next": "colorsandcones"
+   },
+   "colorsandcones": {
+      "type": "drawing",
+      "instruction": "Mark the center of trees with flowers, cones, or non-green leaves. If none, click Next",
+      "tools": [
+         {"value": "flowers",
+          "label": "Flowers",
+          "type": "point",
+          "color": "#FF00FF",
+          "details": [{
+              "type": "single",
+              "required": true,
+              "question": "What color flowers?",
+              "answers": [
+                {"value": "white",
+                 "label": "White" },
+                {"value": "pink",
+                 "label": "Pink" },
+                {"value": "red",
+                 "label": "Red" },
+                {"value": "orange",
+                 "label": "Orange" },
+                {"value": "yellow",
+                 "label": "Yellow" },
+                {"value": "purple",
+                 "label": "Purple" }
+                ]    
+              }]
+         },
+
+         {"value": "cones",
+          "label": "Cones",
+          "type": "point",
+          "color": "#FF6600"},
+
+         {"value": "nongreenleaves",
+          "label": "Leaves that are NOT GREEN",
+          "type": "point",
+          "color": "#FFFF00",
+          "details": [{
+              "type": "single",
+              "required": true,
+              "question": "What color leaves?",
+              "answers": [
+                {"value": "red",
+                 "label": "Red" },
+                {"value": "orange",
+                 "label": "Orange" },
+                {"value": "yellow",
+                 "label": "Yellow" },
+                {"value": "brown",
+                 "label": "Brown" }
+                ]    
+              }]
+          }
+      ],
+      "next": "anomalies"
+   },
+   "anomalies": {
+      "type": "multiple",
+      "required": true,
+      "question": "Is there anything odd?",
+      "answers": [
+         {"value": "insects",
+          "label": "Insects on the lens" },
+         {"value": "rainsnowlens",
+          "label": "Rain or snow on the lens" },
+         {"value": "otherlens",
+          "label": "Something else on the lens" },
+         {"value": "people",
+          "label": "People in the image" },
+         {"value": "animals",
+          "label": "Birds or animals in the image" },
+         {"value": "other",
+          "label": "Something else odd" },
+         {"value": "none",
+          "label": "None of these" }
+      ],
+      "help": "Sometimes our cameras see unexpected things that affect how well we can determine what is happening with the vegetation. Here are some examples:\n\nInsects on the lens\n\n ![insects](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/insects_small.jpg)\n\nRain on the lens\n\n ![rain](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/rain_on_lens_small.jpg)\n\nAnimals in the image\n\n ![animals](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/grazers_small.jpg)\n\nSomething else odd\n\n ![anomaly](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/other_anomaly_small.jpg)",
+      "next": null
+   }
+}

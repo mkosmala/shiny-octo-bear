@@ -1,0 +1,28 @@
+{
+   "anyshifts": {
+      "type": "single",
+      "required": true,
+      "question": "Are there any shifts in the time-series?",
+      "answers": [
+         {"value": "yes",
+           "label": "Yes",
+           "next": "markshifts"},
+         {"value": "no",
+          "label": "No",
+          "next": null }
+      ],
+      "help": "What you see here is a composite of a year's worth of images. Each image is represented by a single pixel column that comes from the middle of the image. By lining up these pixel columns we can see whether the camera moved around. We call these camera moves **field of view shifts** and they make it harder for us to figure out vegetation changes. Sometimes a camera doesn't move at all and so there are no field of view shifts in a year. Sometimes the camera moves one or more times.\n\nHere is an example of a composite with no field of view shifts:\n\n ![no_shift](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/dukehw_2014_slice_small.png)\n\nHere is an example where the camera did move several times. You can see that the horizon line seems to suddenly jump to a new location.\n\n ![shifts](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/boundarywaters_2011_slice_small_orig.png)"
+   },
+   "markshifts": {
+      "type": "drawing",
+      "instruction": "Mark all major shifts in the time-series",
+      "tools": [
+         {"value":  "mark",
+          "label":  "Shift",
+          "type":  "point",
+          "color":  "#FF0000"}
+      ],
+      "help": "To mark the field of view shifts, first find a shift. Place a marker anywhere along the verticle line that represents where the shift occurs. For example, if this is your image:\n\n ![shifts](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/boundarywaters_2011_slice_small_orig.png)\n\nYou can see four shifts shown here by dotted lines:\n\n ![shifts](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/boundarywaters_2011_slice_small_lines.png)\n\nPlace a marker anywhere on each line:\n\n ![shifts](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/boundarywaters_2011_slice_small.png)",
+      "next": null
+   }
+}

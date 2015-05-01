@@ -15,9 +15,6 @@ todir = sys.argv[3]
 
 with open(filelistfilename,'r') as filelist:
 
-    # remove header line
-    filelist.readline()
-
     # go through all the files in the list and resize them
     for line in filelist:
         line = line.rstrip()

@@ -1,0 +1,47 @@
+{
+   "badimage": {
+      "type": "single",
+      "required": true,
+      "question": "Do you have a clear view of an outdoor landscape?",
+      "answers": [
+         {"value": true,
+          "label": "Yes",
+          "next": "snow" },
+         {"value": false,
+          "label": "No",
+          "next": null }
+      ],
+      "help": "Choose **yes** if you can see enough of the landscape to answer questions about it.\n\nChoose **no** if the image is blurry or foggy, the image is obscured by something, the image is indoors, or you cannot see the landscape well for any other reason."
+   },
+   "snow": {
+      "type": "single",
+      "required": true,
+      "question": "Is there snow?",
+      "answers": [
+         {"value": "no",
+          "label": "No",
+          "next": "cones" },
+         {"value": "little",
+          "label": "Yes, but just a little bit",
+          "next": "cones" },
+         {"value": "yes",
+          "label": "Yes, and it's everywhere",
+          "next": "cones" }
+      ],
+      "help": "Choose **No** if you don't see any snow.\n\nIf there is snow, but it is thin and patchy, choose **Yes, but just a little bit**.\n\nIf snow covers much of the ground or vegetation, choose **Yes, and it's everywhere**."
+   },
+   "cones": {
+      "type": "single",
+      "required": true,
+      "question": "Are cones visible?",
+      "answers": [
+         {"value": true,
+           "label": "Yes",
+          "next": null },
+         {"value": false,
+          "label": "No",
+          "next": null }
+      ],
+      "help": "Needleleaf trees produce seeds inside cones. If you see any cones on trees, choose **yes**. Here is an example of a tree with cones:\n\n ![tree_flowers](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/cones_EN_small.jpg)"
+   }
+}

@@ -1,0 +1,39 @@
+{
+   "badimage": {
+      "type": "single",
+      "required": true,
+      "question": "Do you have a clear view of an outdoor landscape in both images?",
+      "answers": [
+         {"value": "yes",
+           "label": "Yes",
+           "next": "leafsize"},
+         {"value": "leftbad",
+          "label": "No, the left image is bad",
+          "next": null },
+         {"value": "rightbad",
+          "label": "No, the right image is bad",
+          "next": null },
+         {"value": "bothbad",
+          "label": "No, both left and right images are bad",
+          "next": null }
+      ],
+      "help": "Choose **yes** if you can see enough of the landscape to answer questions about it.\n\nAn image is **bad** if it is blurry or foggy, obscured by something, is a picture of indoors, or you cannot see the landscape well for any other reason."
+   },
+   "leafsize": {
+      "type": "single",
+      "required": true,
+      "question": "Which image appears to have more or bigger leaves?",
+      "answers": [
+         {"value": "left",
+          "label": "Left",
+          "next": null },
+         {"value": "right",
+          "label": "Right",
+          "next": null },
+         {"value": "same",
+          "label": "They are about the same",
+          "next": null }
+      ],
+      "help": "In the spring, tree leaves increase in number and size. We are trying to determine when trees start producing leaves and when the full leaf canopy is in place.\n\nHere is an example where the right image has more leaves and bigger leaves than the left image.\n ![more_leaves](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/more_leaves_spring1.jpg)\n\nHere is an example where the number and size of leaves appears to be about the same for both images.\n ![not_more_leaves](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/more_leaves_spring2.jpg)"
+   }
+}

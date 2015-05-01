@@ -1,0 +1,303 @@
+{
+   "badimage": {
+      "type": "single",
+      "required": true,
+      "question": "Do you have a clear view of an outdoor landscape?",
+      "answers": [
+         {"value": true,
+          "label": "Yes",
+          "next": "snow" },
+         {"value": false,
+          "label": "No",
+          "next": null }
+      ],
+      "help": "Choose **yes** if you can see enough of the landscape to answer questions about it.\n\nChoose **no** if the image is blurry or foggy, the image is obscured by something, the image is indoors, or you cannot see the landscape well for any other reason."
+   },
+   "snow": {
+      "type": "single",
+      "required": true,
+      "question": "Is there snow?",
+      "answers": [
+         {"value": "no",
+          "label": "No",
+          "next": "cropstate" },
+         {"value": "little",
+          "label": "Yes, but just a little bit",
+          "next": null },
+         {"value": "yes",
+          "label": "Yes, and it's everywhere",
+          "next": null }
+      ],
+      "help": "Choose **No** if you don't see any snow.\n\nIf there is snow, but it is thin and patchy, choose **Yes, but just a little bit**.\n\nIf snow covers much of the ground or vegetation, choose **Yes, and it's everywhere**."
+   },
+   "cropstate": {
+      "type": "single",
+      "required": true,
+      "question": "What do you see in the image?",
+      "answers": [
+         {"value": "crops",
+          "label": "Crops are growing",
+          "next": "cropgrow" },
+         {"value": "ground",
+          "label": "The ground is bare",
+          "next": null },
+         {"value": "debris",
+          "label": "There is crop debris on the ground",
+          "next": null },
+         {"value": "ground",
+          "label": "There are hay rows",
+          "next": null },
+         {"value": "weeds",
+          "label": "The ground is covered in weeds",
+          "next": null }
+      ],
+      "help": "Examples\n--------\nBare ground\n\n ![bare_ground](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/bareground_AG_small.jpg)\n\n Crop debris\n\n ![crop_debris](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/cropdebris_AG_small.jpg)\n\n Hay rows\n\n ![hay_rows](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/how_rows_AG_small.jpg)\n\n Weeds\n\n ![weeds](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/weedy_AG_small.JPG)"
+   },
+   "cropgrow": {
+      "type": "single",
+      "required": true,
+      "question": "What is the crop?",
+      "answers": [
+         {"value": "corn",
+          "label": "Corn", 
+          "next": "corncertainty" },
+         {"value": "soybean",
+          "label": "Soybean",
+          "next": "soycertainty" },
+         {"value": "wheat",
+          "label": "Wheat",
+          "next": "wheatcertainty" },
+         {"value": "cotton",
+          "label": "Cotton",
+          "next": "cottoncertainty" },
+         {"value": "sorghum",
+          "label": "Sorghum",
+          "next": "sorghumcertainty" },
+         {"value": "clover",
+          "label": "Clover",
+          "next": "clovercertainty" },
+         {"value": "grass",
+          "label": "Grass/Hay",
+          "next": "haycertainty" }
+      ],
+      "help": "Examples\n--------\nCorn\n\n ![corn](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/corn_early_AG_small.jpg)\n\n ![corn](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/corn_mature_AG_small.jpg)\n\n Soybean\n\n ![soybean](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/soybean_AG_small.jpg)\n\n Wheat\n\n ![wheat](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/wheat_AG_small.jpg)\n\n Cotton\n\n ![cotton](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/cotton_AG_small.jpg)\n\n Sorghum\n\n ![sorghum](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/sorghum_AG_small.png)\n\n Clover\n\n ![clover](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/clover_AG_small.jpg)\n\n Grass/Hay\n\n ![grass_hay](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/hay_AG_small.jpg)"
+   },
+
+   "corncertainty": {
+      "type": "single",
+      "required": true,
+      "question": "How sure are you that the crop is corn?",
+      "answers": [
+         {"value": "very",
+          "label": "Very sure",
+          "next": "corntassel" },
+         {"value": "sure",
+          "label": "Pretty sure",
+          "next": "corntassel" },
+         {"value": "unsure",
+          "label": "Not very sure",
+          "next": "corntassel" },
+         {"value": "not",
+          "label": "I have no idea what the crop type is",
+          "next": "corntassel" }
+      ]
+   },
+   "corntassel": {
+      "type": "single",
+      "required": true,
+      "question": "Does the corn have tassels?",
+      "answers": [
+         {"value": true,
+          "label": "Yes",
+          "next": null },
+         {"value": false,
+          "label": "No",
+          "next": null }
+      ],
+      "help": "Corn tassels are the flowers of the corn plant. They stick up like spikes above mature corn plants. You can see they yellow corn tassels in this image:\n\n ![corn_tassels](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/corn_mature_AG_small.jpg)"
+   },
+
+
+   "soycertainty": {
+      "type": "single",
+      "required": true,
+      "question": "How sure are you that the crop is soybean?",
+      "answers": [
+         {"value": "very",
+          "label": "Very sure",
+          "next": null },
+         {"value": "sure",
+          "label": "Pretty sure",
+          "next": null },
+         {"value": "unsure",
+          "label": "Not very sure",
+          "next": null },
+         {"value": "not",
+          "label": "I have no idea what the crop type is",
+          "next": null }
+      ]
+   },
+
+
+   "wheatcertainty": {
+      "type": "single",
+      "required": true,
+      "question": "How sure are you that the crop is wheat?",
+      "answers": [
+         {"value": "very",
+          "label": "Very sure",
+          "next": "wheatseedhead" },
+         {"value": "sure",
+          "label": "Pretty sure",
+          "next": "wheatseedhead" },
+         {"value": "unsure",
+          "label": "Not very sure",
+          "next": "wheatseedhead" },
+         {"value": "not",
+          "label": "I have no idea what the crop type is",
+          "next": "wheatseedhead" }
+      ]
+   },
+   "wheatseedhead": {
+      "type": "single",
+      "required": true,
+      "question": "Does the wheat have seedheads?",
+      "answers": [
+         {"value": true,
+          "label": "Yes",
+          "next": null },
+         {"value": false,
+          "label": "No",
+          "next": null }
+      ],
+      "help": "Wheat plants produces seedheads when they are mature. Once seedheads are formed, the wheat dies and turns yellow. These fields look like 'amber waves of grain'.\n\n ![wheat](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/wheat_AG_small.jpg)"
+   },
+
+
+   "cottoncertainty": {
+      "type": "single",
+      "required": true,
+      "question": "How sure are you that the crop is cotton?",
+      "answers": [
+         {"value": "very",
+          "label": "Very sure",
+          "next": "cottonflower" },
+         {"value": "sure",
+          "label": "Pretty sure",
+          "next": "cottonflower" },
+         {"value": "unsure",
+          "label": "Not very sure",
+          "next": "cottonflower" },
+         {"value": "not",
+          "label": "I have no idea what the crop type is",
+          "next": "cottonflower" }
+      ]
+   },
+   "cottonflower": {
+      "type": "single",
+      "required": true,
+      "question": "Is the cotton flowering?",
+      "answers": [
+         {"value": true,
+          "label": "Yes",
+          "next": null },
+         {"value": false,
+          "label": "No",
+          "next": null }
+      ],
+      "help": "Cotton plants first create white flowers.\n\n ![cotton_flowers](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/cotton_AG_small.jpg)\n\n Then the flowers turn to seeds, which are surrounded by the cotton. When the seeds are mature, the leaves die, leaving just the seeds and cotton.\n\n ![cotton_seeds](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/cotton2_AG_small.jpg)"
+   },
+
+
+   "sorghumcertainty": {
+      "type": "single",
+      "required": true,
+      "question": "How sure are you that the crop is sorghum?",
+      "answers": [
+         {"value": "very",
+          "label": "Very sure",
+          "next": "sorghumflower" },
+         {"value": "sure",
+          "label": "Pretty sure",
+          "next": "sorghumflower" },
+         {"value": "unsure",
+          "label": "Not very sure",
+          "next": "sorghumflower" },
+         {"value": "not",
+          "label": "I have no idea what the crop type is",
+          "next": "sorghumflower" }
+      ]
+   },
+   "sorghumflower": {
+      "type": "single",
+      "required": true,
+      "question": "Is the sorghum flowering?",
+      "answers": [
+         {"value": true,
+          "label": "Yes",
+          "next": null },
+         {"value": false,
+          "label": "No",
+          "next": null }
+      ],
+      "help": "Sorghum has large yellow, tan, or pink flowers.\n\n ![sorghum_flowers](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/sorghum_AG_small.png)"
+   },
+
+
+   "clovercertainty": {
+      "type": "single",
+      "required": true,
+      "question": "How sure are you that the crop is clover?",
+      "answers": [
+         {"value": "very",
+          "label": "Very sure",
+          "next": "cloverflower" },
+         {"value": "sure",
+          "label": "Pretty sure",
+          "next": "cloverflower" },
+         {"value": "unsure",
+          "label": "Not very sure",
+          "next": "cloverflower" },
+         {"value": "not",
+          "label": "I have no idea what the crop type is",
+          "next": "cloverflower" }
+      ]
+   },
+   "cloverflower": {
+      "type": "single",
+      "required": true,
+      "question": "Is the clover flowering?",
+      "answers": [
+         {"value": true,
+          "label": "Yes",
+          "next": null },
+         {"value": false,
+          "label": "No",
+          "next": null }
+      ],
+      "help": "Clovers have white, yellow, pink, or purple flowers.\n\n ![clover_flowers](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/clover_AG_small.jpg)"
+   },
+
+
+   "haycertainty": {
+      "type": "single",
+      "required": true,
+      "question": "How sure are you that the crop is grass or hay?",
+      "answers": [
+         {"value": "very",
+          "label": "Very sure",
+          "next": null },
+         {"value": "sure",
+          "label": "Pretty sure",
+          "next": null },
+         {"value": "unsure",
+          "label": "Not very sure",
+          "next": null },
+         {"value": "not",
+          "label": "I have no idea what the crop type is",
+          "next": null }
+      ]
+   }
+
+
+}

@@ -1,0 +1,61 @@
+image,subject_set,site,veg_type,location,latitude,longitude,elevation
+./masked_images/dukehw/2014/dukehw_2014_01_04_120110_masked_DB0001.jpg,DB_masked,dukehw,DB,"Duke Forest, North Carolina, USA",35.973583,-79.100371,400
+./masked_images/dukehw/2014/dukehw_2014_03_30_120110_masked_DB0001.jpg,DB_masked,dukehw,DB,"Duke Forest, North Carolina, USA",35.973583,-79.100371,400
+./masked_images/dukehw/2014/dukehw_2014_07_15_120111_masked_DB0001.jpg,DB_masked,dukehw,DB,"Duke Forest, North Carolina, USA",35.973583,-79.100371,400
+./masked_images/imcrktussock/2012/imcrktussock_2012_11_04_120611_masked_GR0001.jpg,GR_masked,imcrktussock,GR,"Imnavait Creek, Alaska, USA",68.60633,-149.30408,918
+./masked_images/imcrktussock/2012/imcrktussock_2012_09_12_120609_masked_GR0001.jpg,GR_masked,imcrktussock,GR,"Imnavait Creek, Alaska, USA",68.60633,-149.30408,918
+./masked_images/imcrktussock/2014/imcrktussock_2014_01_31_120612_masked_GR0001.jpg,GR_masked,imcrktussock,GR,"Imnavait Creek, Alaska, USA",68.60633,-149.30408,918
+./masked_images/jernort/2014/jernort_2014_04_03_120003_masked_SH0001.jpg,SH_masked,jernort,SH,"Jornada Experimental Range, New Mexico, USA",32.619,-106.788,1328
+./masked_images/jernort/2014/jernort_2014_10_08_120007_masked_SH0001.jpg,SH_masked,jernort,SH,"Jornada Experimental Range, New Mexico, USA",32.619,-106.788,1328
+./masked_images/jernort/2014/jernort_2014_08_14_120005_masked_SH0001.jpg,SH_masked,jernort,SH,"Jornada Experimental Range, New Mexico, USA",32.619,-106.788,1328
+./masked_images/kelloggcorn/2014/kelloggcorn_2014_10_15_090300_masked_AG0001.jpg,AG_masked,kelloggcorn,AG,"Kellogg Biological Station, Michigan, USA",42.437536,-85.322547,288
+./masked_images/kelloggcorn/2014/kelloggcorn_2014_10_13_110300_masked_AG0001.jpg,AG_masked,kelloggcorn,AG,"Kellogg Biological Station, Michigan, USA",42.437536,-85.322547,288
+./masked_images/kelloggcorn/2014/kelloggcorn_2014_06_16_110300_masked_AG0001.jpg,AG_masked,kelloggcorn,AG,"Kellogg Biological Station, Michigan, USA",42.437536,-85.322547,288
+./masked_images/kendall/2012/kendall_2012_10_01_100108_masked_GR0001.jpg,GR_masked,kendall,GR,"Kendall Grassland, Arizona, USA",31.73653,-109.94189,1291
+./masked_images/kendall/2012/kendall_2012_12_08_120112_masked_GR0001.jpg,GR_masked,kendall,GR,"Kendall Grassland, Arizona, USA",31.73653,-109.94189,1291
+./masked_images/kendall/2013/kendall_2013_03_09_120109_masked_GR0001.jpg,GR_masked,kendall,GR,"Kendall Grassland, Arizona, USA",31.73653,-109.94189,1291
+./masked_images/konza/2013/konza_2013_03_04_074745_masked_GR0001.jpg,GR_masked,konza,GR,"Konza Prairie Biological Station, Kansas, USA",39.0824,-96.5603,443
+./masked_images/konza/2014/konza_2014_01_29_120106_masked_GR0001.jpg,GR_masked,konza,GR,"Konza Prairie Biological Station, Kansas, USA",39.0824,-96.5603,443
+./masked_images/konza/2014/konza_2014_08_03_120105_masked_GR0001.jpg,GR_masked,konza,GR,"Konza Prairie Biological Station, Kansas, USA",39.0824,-96.5603,443
+./masked_images/merbleue/2013/merbleue_2013_05_01_120103_masked_SH0001.jpg,SH_masked,merbleue,SH,"Mer Bleue Conservation Area, Ottawa, Canada",45.4094,-75.5187,69
+./masked_images/merbleue/2014/merbleue_2014_06_20_120105_masked_SH0001.jpg,SH_masked,merbleue,SH,"Mer Bleue Conservation Area, Ottawa, Canada",45.4094,-75.5187,69
+./masked_images/merbleue/2014/merbleue_2014_06_19_120106_masked_SH0001.jpg,SH_masked,merbleue,SH,"Mer Bleue Conservation Area, Ottawa, Canada",45.4094,-75.5187,69
+./masked_images/niwot2/2010/niwot2_2010_05_03_120139_masked_EN0001.jpg,EN_masked,niwot2,EN,"Niwot Ridge, Colorado, USA",40.032864,-105.54697,
+./masked_images/niwot2/2011/niwot2_2011_10_01_120140_masked_EN0001.jpg,EN_masked,niwot2,EN,"Niwot Ridge, Colorado, USA",40.032864,-105.54697,
+./masked_images/niwot2/2011/niwot2_2011_01_09_120140_masked_EN0001.jpg,EN_masked,niwot2,EN,"Niwot Ridge, Colorado, USA",40.032864,-105.54697,
+./masked_images/dukehw_pairs/2014/dukehw_2014_04_23_120109_masked_DB0001_pair_diff7.jpg,DB_pairs_spring,dukehw,DB,"Duke Forest, North Carolina, USA",35.973583,-79.100371,400
+./masked_images/dukehw_pairs/2014/dukehw_2014_03_19_120107_masked_DB0001_pair_diff3r.jpg,DB_pairs_spring,dukehw,DB,"Duke Forest, North Carolina, USA",35.973583,-79.100371,400
+./masked_images/dukehw_pairs/2014/dukehw_2014_03_16_120108_masked_DB0001_pair_diff3.jpg,DB_pairs_spring,dukehw,DB,"Duke Forest, North Carolina, USA",35.973583,-79.100371,400
+./masked_images/dukehw_pairs/2014/dukehw_2014_10_24_120110_masked_DB0001_pair_diff7r.jpg,DB_pairs_fall,dukehw,DB,"Duke Forest, North Carolina, USA",35.973583,-79.100371,400
+./masked_images/dukehw_pairs/2014/dukehw_2014_10_08_120110_masked_DB0001_pair_diff7.jpg,DB_pairs_fall,dukehw,DB,"Duke Forest, North Carolina, USA",35.973583,-79.100371,400
+./masked_images/dukehw_pairs/2014/dukehw_2014_11_20_120112_masked_DB0001_pair_diff3r.jpg,DB_pairs_fall,dukehw,DB,"Duke Forest, North Carolina, USA",35.973583,-79.100371,400
+./AMOS_images/resized/cam2_20060526_231600.jpg,AMOS_sample,cam2,unknown,Pebble Beach golf course 1st tee,36.569102,-121.949756,
+./AMOS_images/resized/cam25_20081022_094043.jpg,AMOS_sample,cam25,unknown,Russia,59.93544365,30.31867661,
+./AMOS_images/resized/cam65_20081017_181204.jpg,AMOS_sample,cam65,unknown,Coolidge High School,36.94594605,-94.6547172,
+./unmasked_images/dukehw/2013/dukehw_2013_11_15_120110_unmasked.jpg,DB_unmasked,dukehw,DB,"Duke Forest, North Carolina, USA",35.973583,-79.100371,400
+./unmasked_images/dukehw/2014/dukehw_2014_10_29_120110_unmasked.jpg,DB_unmasked,dukehw,DB,"Duke Forest, North Carolina, USA",35.973583,-79.100371,400
+./unmasked_images/dukehw/2014/dukehw_2014_09_29_120109_unmasked.jpg,DB_unmasked,dukehw,DB,"Duke Forest, North Carolina, USA",35.973583,-79.100371,400
+./unmasked_images/imcrktussock/2014/imcrktussock_2014_07_21_120612_unmasked.jpg,GR_unmasked,imcrktussock,GR,"Imnavait Creek, Alaska, USA",68.60633,-149.30408,918
+./unmasked_images/imcrktussock/2012/imcrktussock_2012_10_14_130609_unmasked.jpg,GR_unmasked,imcrktussock,GR,"Imnavait Creek, Alaska, USA",68.60633,-149.30408,918
+./unmasked_images/imcrktussock/2013/imcrktussock_2013_11_11_120611_unmasked.jpg,GR_unmasked,imcrktussock,GR,"Imnavait Creek, Alaska, USA",68.60633,-149.30408,918
+./unmasked_images/jernort/2014/jernort_2014_05_31_120003_unmasked.jpg,SH_unmasked,jernort,SH,"Jornada Experimental Range, New Mexico, USA",32.619,-106.788,1328
+./unmasked_images/jernort/2014/jernort_2014_10_29_120006_unmasked.jpg,SH_unmasked,jernort,SH,"Jornada Experimental Range, New Mexico, USA",32.619,-106.788,1328
+./unmasked_images/jernort/2014/jernort_2014_06_12_120006_unmasked.jpg,SH_unmasked,jernort,SH,"Jornada Experimental Range, New Mexico, USA",32.619,-106.788,1328
+./unmasked_images/kelloggcorn/2014/kelloggcorn_2014_11_30_110300_unmasked.jpg,AG_unmasked,kelloggcorn,AG,"Kellogg Biological Station, Michigan, USA",42.437536,-85.322547,288
+./unmasked_images/kelloggcorn/2014/kelloggcorn_2014_07_25_110300_unmasked.jpg,AG_unmasked,kelloggcorn,AG,"Kellogg Biological Station, Michigan, USA",42.437536,-85.322547,288
+./unmasked_images/kelloggcorn/2014/kelloggcorn_2014_07_02_110300_unmasked.jpg,AG_unmasked,kelloggcorn,AG,"Kellogg Biological Station, Michigan, USA",42.437536,-85.322547,288
+./unmasked_images/kendall/2012/kendall_2012_09_27_120131_unmasked.jpg,GR_unmasked,kendall,GR,"Kendall Grassland, Arizona, USA",31.73653,-109.94189,1291
+./unmasked_images/kendall/2013/kendall_2013_11_07_113111_unmasked.jpg,GR_unmasked,kendall,GR,"Kendall Grassland, Arizona, USA",31.73653,-109.94189,1291
+./unmasked_images/kendall/2014/kendall_2014_07_18_120113_unmasked.jpg,GR_unmasked,kendall,GR,"Kendall Grassland, Arizona, USA",31.73653,-109.94189,1291
+./unmasked_images/konza/2013/konza_2013_03_19_120117_unmasked.jpg,GR_unmasked,konza,GR,"Konza Prairie Biological Station, Kansas, USA",39.0824,-96.5603,443
+./unmasked_images/konza/2014/konza_2014_05_24_120114_unmasked.jpg,GR_unmasked,konza,GR,"Konza Prairie Biological Station, Kansas, USA",39.0824,-96.5603,443
+./unmasked_images/konza/2013/konza_2013_01_20_044102_unmasked.jpg,GR_unmasked,konza,GR,"Konza Prairie Biological Station, Kansas, USA",39.0824,-96.5603,443
+./unmasked_images/merbleue/2014/merbleue_2014_08_18_120104_unmasked.jpg,SH_unmasked,merbleue,SH,"Mer Bleue Conservation Area, Ottawa, Canada",45.4094,-75.5187,69
+./unmasked_images/merbleue/2013/merbleue_2013_12_01_120104_unmasked.jpg,SH_unmasked,merbleue,SH,"Mer Bleue Conservation Area, Ottawa, Canada",45.4094,-75.5187,69
+./unmasked_images/merbleue/2013/merbleue_2013_05_27_120103_unmasked.jpg,SH_unmasked,merbleue,SH,"Mer Bleue Conservation Area, Ottawa, Canada",45.4094,-75.5187,69
+./unmasked_images/niwot2/2010/niwot2_2010_10_10_120142_unmasked.jpg,EN_unmasked,niwot2,EN,"Niwot Ridge, Colorado, USA",40.032864,-105.54697,
+./unmasked_images/niwot2/2010/niwot2_2010_02_19_120140_unmasked.jpg,EN_unmasked,niwot2,EN,"Niwot Ridge, Colorado, USA",40.032864,-105.54697,
+./unmasked_images/niwot2/2009/niwot2_2009_09_03_120141_unmasked.jpg,EN_unmasked,niwot2,EN,"Niwot Ridge, Colorado, USA",40.032864,-105.54697,
+./slices/aguatibiaeast_2013_slice.png,shift_slices,aguatibiaeast,,,,,
+./slices/bitterootvalley_2012_slice.png,shift_slices,bitterootvalley,,,,,
+./slices/boundarywaters_2009_slice.png,shift_slices,boundarywaters,,,,,

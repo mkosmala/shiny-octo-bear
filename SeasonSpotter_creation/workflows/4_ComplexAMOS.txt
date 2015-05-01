@@ -1,0 +1,74 @@
+{
+   "badimage": {
+      "type": "single",
+      "required": true,
+      "question": "Can you see any plants or trees?",
+      "answers": [
+         {"value": "yes",
+           "label": "Yes",
+           "next": "vegetation"},
+         {"value": "occluded",
+          "label": "No, I cannot see the image well",
+          "next": null },
+         {"value": "noveg",
+          "label": "No, there are no plants or trees in this image",
+          "next": null }
+      ],
+      "help": "Choose **yes** if you can see enough of the landscape to answer questions about it.\n\nChoose **No, I cannot see the image well** if the image is blurry or foggy, the image is obscured by something, the image is indoors, or you cannot see the landscape well for any other reason.\n\nChoose **No, there are no plants or trees in this image** if the image is of an outdoor scene, but there is no vegetation in that scene."
+   },
+   "vegetation": {
+      "type": "drawing",
+      "instruction": "Draw a shape around each area that contains the same type of plants or trees",
+      "tools": [
+         {"value":  "broadleaf",
+          "label":  "Broad-leaf Trees",
+          "type":  "polygon",
+          "color":  "#FF0000"},
+         {"value":  "needleleaf",
+          "label":  "Needle-leaf Trees",
+          "type":  "polygon",
+          "color":  "#FF9933"},
+         {"value":  "shrub",
+          "label":  "Shrubs",
+          "type":  "polygon",
+          "color":  "#663300"},
+         {"value":  "grass",
+          "label":  "Grass",
+          "type":  "polygon",
+          "color":  "#009933"},
+         {"value":  "plants",
+          "label":  "Plants",
+          "type":  "polygon",
+          "color":  "#009999"},
+         {"value":  "crops",
+          "label":  "Cropland",
+          "type":  "polygon",
+          "color":  "#0099CC"},
+         {"value":  "far",
+          "label":  "Far away vegetation",
+          "type":  "polygon",
+          "color":  "#003300"}
+      ],
+      "help": "Look at the image and find regions that contain vegetation of the same type. Carefully draw a shape around those regions. It is better to draw your shape slightly small so that some vegetation is outside your shape than to allow other types of vegetation, sky, buildings, or other things to be inside your shape. Use **plants** for any small plant that is not a shrub, crop, or grass. Use **far away vegetation** for vegetation that is too far away to determine its type. Here are some examples:\n\nNeedle-leaf Trees\n\n ![needle_leaf](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/needle_leaf_AMOS.jpg)\n\nShrubs\n\n ![shrubs](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/shrub_AMOS.jpg)\n\nGrass\n\n ![grass](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/grass_AMOS.jpg)\n\nPlants\n\n ![plants](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/plants_AMOS.jpg)\n\nFar away vegetation\n\n ![far_veg](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/far_veg_AMOS.jpg)",
+      "next": "certainty"
+   },
+   "certainty": {
+      "type": "single",
+      "required": true,
+      "question": "How sure are you about the type of plants or trees that you marked?",
+      "answers": [
+         {"value": "very",
+          "label": "Very sure",
+          "next": null },
+         {"value": "sure",
+          "label": "Pretty sure",
+          "next": null },
+         {"value": "unsure",
+          "label": "Not very sure",
+          "next": null },
+         {"value": "not",
+          "label": "I have no idea if my marking was the right type",
+          "next": null }
+      ]
+   }
+}

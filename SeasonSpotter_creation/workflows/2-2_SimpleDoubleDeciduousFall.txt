@@ -1,0 +1,73 @@
+{
+   "badimage": {
+      "type": "single",
+      "required": true,
+      "question": "Do you have a clear view of an outdoor landscape in both images?",
+      "answers": [
+         {"value": "yes",
+           "label": "Yes",
+           "next": "greenleaves"},
+         {"value": "leftbad",
+          "label": "No, the left image is bad",
+          "next": null },
+         {"value": "rightbad",
+          "label": "No, the right image is bad",
+          "next": null },
+         {"value": "bothbad",
+          "label": "No, both left and right images are bad",
+          "next": null }
+      ],
+      "help": "Choose **yes** if you can see enough of the landscape to answer questions about it.\n\nAn image is **bad** if it is blurry or foggy, obscured by something, is a picture of indoors, or you cannot see the landscape well for any other reason."
+   },
+   "greenleaves": {
+      "type": "single",
+      "required": true,
+      "question": "In which image do you see more **green** leaves?",
+      "answers": [
+         {"value": "left",
+          "label": "Left",
+          "next": "leafcolor" },
+         {"value": "right",
+          "label": "Right",
+          "next": "leafcolor" },
+         {"value": "same",
+          "label": "They have the same amount of green leaves",
+          "next": "leafcolor" }
+      ],
+      "help": "In the fall, leaves start turning color. We want to determine when the leaves start turning color and when there are no green leaves left.\n\nHere is an example where there are more green leaves in the left image. Many of the leaves that are green in the left image are yellow, orange, or red in the right image.\n  ![more_green_leaves](https://raw.githubusercontent.com/mkosmala/SeasonSpotterLanding/gh-pages/helpimages/more_green_leaves_autumn.jpg)"
+   },
+   "leafcolor": {
+      "type": "single",
+      "required": true,
+      "question": "In which image do the leaves appear more vibrant yellow, orange, or red?",
+      "answers": [
+         {"value": "left",
+          "label": "Left",
+          "next": "leaffall" },
+         {"value": "right",
+          "label": "Right",
+          "next": "leaffall" },
+         {"value": "same",
+          "label": "The leaves in both are the same vibrancy",
+          "next": "leaffall" }
+      ],
+      "help": "Choose the image with the more vibrantly colored leaves. If there are no colored leaves in either image, choose **The leaves in both are the same vibrancy**."
+   },
+   "leaffall": {
+      "type": "single",
+      "required": true,
+      "question": "In which image do you see more **total** leaves on the trees?",
+      "answers": [
+         {"value": "left",
+          "label": "Left", 
+          "next": null },
+         {"value": "right",
+          "label": "Right", 
+          "next": null },
+         {"value": "same",
+          "label": "They have the same amount of leaves on the trees", 
+          "next": null }
+      ],
+      "help": "Choose the image in which there are more leaves (of any color) on the trees. If there are no leaves in either image, choose **They have the same amount of leaves on the trees**."
+   }
+}
