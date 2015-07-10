@@ -26,23 +26,6 @@ project_simple = "Season Spotter Questions"
 project_complex = "Season Spotter Image Marking"
 
 
-# -----------
-# DEFINITIONS
-# -----------
-
-# vegetation type lookup
-veg_lookup = { "AG":"Agriculture",
-               "DB":"Deciduous Broadleaf Forest",
-               "DN":"Deciduous Needle-leaf Forest",
-               "EB":"Evergreen Broadleaf Forest",
-               "EN":"Evergreen Needle-leaf Forest",
-               "GR":"Grassland",
-               "MX":"Mixed Forest",
-               "SH":"Shrubland",
-               "TN":"Tundra",
-               "WL":"Wetland" }
-
-
 #---
 # Create the workflows
 #---

@@ -5,3 +5,4 @@ PhenoCam_image_processing/tidal_sites/try2.csv
 PhenoCam_image_processing/tidal_sites/try1.csv
 *.pyc
 SeasonSpotter_creation/workflows/workflows.zip
+*.txt

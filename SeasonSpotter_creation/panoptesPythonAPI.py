@@ -10,8 +10,11 @@ import csv
 
 # Remote host set to the panoptes staging API
 global host,hostapi
-host = "https://panoptes-staging.zooniverse.org/"
-hostapi = "https://panoptes-staging.zooniverse.org/api/"
+#host = "https://panoptes-staging.zooniverse.org/"
+#hostapi = "https://panoptes-staging.zooniverse.org/api/"
+
+host = "https://panoptes.zooniverse.org/"
+hostapi = "https://panoptes.zooniverse.org/api/"
 
 def get_bearer_token(user_name,password):
     "Logs user in and gets a bearer token for the given user"
@@ -75,6 +78,12 @@ def get_bearer_token(user_name,password):
     request = urllib2.Request(host+"oauth/token",bearer_req_data)
     request.add_header("Content-Type","application/json")
     request.add_header("Accept","application/json")
+
+    print "info"
+    print "bearer: " + bearer_req_data
+    print "body: " + body
+    
+
 
     try:
         response = opener.open(request)
@@ -481,8 +490,20 @@ def create_subject(project_id,meta,filename,token):
             'Authorization':'Bearer '+token}
     response = requests.post(hostapi+'subjects',headers=head,data=values)
 
+    #print values
+    #print "----"
+    #print response.request.headers
+    #print "----"
+    #print response
+    #print response.status_code
+    #print response.text
+    #print "----"
+
+    
+
     # put it in json structure and extract id
     data = response.json()
+    
     subjid = data["subjects"][0]["id"]
     signed_urls = data["subjects"][0]["locations"][0]["image/jpeg"]
 
