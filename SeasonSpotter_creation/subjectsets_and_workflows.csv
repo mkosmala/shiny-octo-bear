@@ -22,3 +22,13 @@ Workflow,SubjectSet,WorkflowSet
 3-2_ComplexTrees,MX_unmasked,complex
 4_ComplexAMOS,AMOS_sample,complex
 5_ComplexShifts,shift_slices,complex
+1-1_SimpleSingleFlowers,extra_1-1,simple
+1-2_SimpleSingleCones,extra_1-2,simple
+1-3_SimpleSingleFlowersAndSeedheads,extra_1-3,simple
+1-4_SimpleSingleCrops,extra_1-4,simple
+2-1_SimpleDoubleDeciduousSpring,extra_2-1,simple
+2-2_SimpleDoubleDeciduousFall,extra_2-2,simple
+3-1_ComplexFlowers,extra_3-1,complex
+3-2_ComplexTrees,extra_3-2,complex
+4_ComplexAMOS,extra_4,complex
+5_ComplexShifts,extra_5,complex

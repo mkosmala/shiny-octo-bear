@@ -35,12 +35,24 @@ def get_bearer_token(user_name,password):
     second = string.find(csrf_line,'"',first+1)
     csrf_token = csrf_line[first+1:second]
 
+    #print "info"
+    #print "user_name: " + user_name
+    #print "password: " + password
+    #print "csrf_token: " + csrf_token
+    #print "line: " + csrf_line
+    #print "body: " + body
+    
+
     #2. use the token to get a devise session via JSON stored in a cookie
-    devise_login_data=("{\"user\": {\"display_name\":\""+user_name+"\",\"password\":\""+password+
+    devise_login_data=("{\"user\": {\"login\":\""+user_name+"\",\"password\":\""+password+
                        "\"}, \"authenticity_token\": \""+csrf_token+"\"}")
     request = urllib2.Request(host+"users/sign_in",data=devise_login_data)
     request.add_header("Content-Type","application/json")
     request.add_header("Accept","application/json")
+
+    #print "----"
+    #print request.headers
+    #print devise_login_data
 
     try:
         response = opener.open(request)
@@ -55,6 +67,7 @@ def get_bearer_token(user_name,password):
     else:
         # everything is fine
         body = response.read()
+
 
     #3. use the devise session to get a bearer token for API access
     bearer_req_data=("{\"grant_type\":\"password\",\"client_id\":\"" +
@@ -563,7 +576,7 @@ def create_user_project(proj,token):
 
     response = requests.post(hostapi+'projects',headers=head,data=projectinfo)
 
-    print projectinfo
+    #print projectinfo
     #print "----"
     #print response.request.headers
     #print "----"
