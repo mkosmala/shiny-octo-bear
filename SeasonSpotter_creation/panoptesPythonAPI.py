@@ -20,7 +20,7 @@ def get_bearer_token(user_name,password):
     "Logs user in and gets a bearer token for the given user"
 
     # look like you're a zooniverse front end client
-    app_client_id="535759b966935c297be11913acee7a9ca17c025f9f15520e7504728e71110a27"
+    app_client_id="ac25d40ce78468420aa5f576c0137cdc0ad2f863abe6d70932c3a16996c6c382"
 
     #0. Establish a cookie jar
     cj = cookielib.CookieJar()
@@ -79,12 +79,10 @@ def get_bearer_token(user_name,password):
     request.add_header("Content-Type","application/json")
     request.add_header("Accept","application/json")
 
-    print "info"
-    print "bearer: " + bearer_req_data
-    print "body: " + body
+    #print "info"
+    #print "bearer: " + bearer_req_data
+    #print "body: " + body
     
-
-
     try:
         response = opener.open(request)
     except urllib2.HTTPError as e:
