@@ -126,7 +126,8 @@ def build_project_info(projtype):
         info["display_name"] = project_complex
 
     info["description"] = "default description"
-    info["primary_language"] = "en-us"
+    #info["primary_language"] = "en-us"
+    info["primary_language"] = "en"
     info["private"] = False
 
     return info

@@ -497,7 +497,12 @@ def create_subject(project_id,meta,filename,token):
     #print response.text
     #print "----"
 
-    
+    if response.status_code>299:
+        print "Error: " + str(response.status_code)
+        print "   " + response.text
+        print "-----"
+        print "Tried to pass data: " + values
+        print "-----"
 
     # put it in json structure and extract id
     data = response.json()
