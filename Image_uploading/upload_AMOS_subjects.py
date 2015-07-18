@@ -26,6 +26,11 @@ projname = "Season Spotter Image Marking"
 subjset = "AMOS_sample"
 
 
+def unicode_csv_reader(utf8_data, dialect=csv.excel, **kwargs):
+    csv_reader = csv.reader(utf8_data, dialect=dialect, **kwargs)
+    for row in csv_reader:
+        yield [unicode(cell, 'utf-8') for cell in row]
+
 
 # ---
 # Create and upload the subjects
@@ -33,19 +38,15 @@ subjset = "AMOS_sample"
 def create_subjects(manifestfile,projid,token):
     
     # read the manifest
-    with codecs.open(manifestfile,'r',encoding='utf-8') as mfile:
-
-        # discard the BOM
-        mfile.seek(2)
+    #with codecs.open(manifestfile,'r',encoding='utf-8') as mfile:
+    with open(manifestfile,'r') as mfile:
     
         # discard header and get csv object
         mfile.readline()
-    
-        # for each image
-        mreader = csv.reader(mfile,delimiter=',',quotechar='\"')
-        for row in mreader:
+        mreader = unicode_csv_reader(mfile)
 
-            print row
+        # for each image
+        for row in mreader:
             
             image = row[0]
             cam = row[1]

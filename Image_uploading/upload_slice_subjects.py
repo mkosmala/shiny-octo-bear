@@ -15,7 +15,7 @@ import codecs
 # ------------------
 
 auth = "authentication.txt"
-imagedir = "/home/margaret/AMOS/AMOS_images/"
+imagedir = "/home/margaret/processing/slices/"
 
 # -----------
 # DEFINITIONS
@@ -23,8 +23,13 @@ imagedir = "/home/margaret/AMOS/AMOS_images/"
 
 # projects to add subjects to
 projname = "Season Spotter Image Marking"
-subjset = "AMOS_sample"
+subjset = "shift_slices"
 
+
+def unicode_csv_reader(utf8_data, dialect=csv.excel, **kwargs):
+    csv_reader = csv.reader(utf8_data, dialect=dialect, **kwargs)
+    for row in csv_reader:
+        yield [unicode(cell, 'utf-8') for cell in row]
 
 
 # ---
@@ -33,25 +38,23 @@ subjset = "AMOS_sample"
 def create_subjects(manifestfile,projid,token):
     
     # read the manifest
-    with codecs.open(manifestfile,'r',encoding='utf-8') as mfile:
-
-        # discard the BOM
-        mfile.seek(2)
+    #with codecs.open(manifestfile,'r',encoding='utf-8') as mfile:
+    with open(manifestfile,'r') as mfile:
     
         # discard header and get csv object
         mfile.readline()
-    
-        # for each image
-        mreader = csv.reader(mfile,delimiter=',',quotechar='\"')
-        for row in mreader:
+        mreader = unicode_csv_reader(mfile)
 
-            print row
+        # for each image
+        for row in mreader:
             
             image = row[0]
-            cam = row[1]
-            loc = row[2]
+            site = row[1]
+            year = row[2]
             lat = row[3]
             lon = row[4]
+            ele = row[5]
+            loc = row[6]
             
             # check to see if the subject set(s) exists; error if not
             subjsetnum = panoptesPythonAPI.get_subject_set(projid,subjset,token)
@@ -60,16 +63,14 @@ def create_subjects(manifestfile,projid,token):
 
             else:
                 # create the metadata object
-                meta = """ "Filename": \"""" + image + """\",
-                           "Webcam": \"""" + cam + """\",
+                meta = """ "#Filename": \"""" + image + """\",
+                           "Camera": \"""" + site + """\",
+                           "Year": \"""" + year + """\",
                            "Location Name": \"""" + loc + """\",
                            "Latitute": \"""" + lat + """\",
-                           "Longitude": \"""" + lon + """\" """
-
-                # convert to unicode in case of accents, umlauts, and the like
-                # 'decode' is from str to unicode 
-                #meta = to_unicode(rawmeta)
-
+                           "Longitude": \"""" + lon + """\",
+                           "Elevation": \"""" + ele + """\" """
+ 
                 # create the subject
                 print "Adding Subject: " + image
                 imagepath = imagedir + image
