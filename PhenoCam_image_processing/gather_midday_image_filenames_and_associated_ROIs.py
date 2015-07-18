@@ -22,8 +22,14 @@ def get_datetime(imgstr,ind):
     return retdt
 
 def get_datetime2(dstr,tstr):
+        
+    # error handle for bad form of others
+    if tstr == "24:00:00":
+        tstr = "23:59:59"
+    
     dparts = re.split("_|-",dstr)
     tparts = re.split(":",tstr)
+    
     retdt = datetime.datetime(int(dparts[0]),int(dparts[1]),int(dparts[2]),
                               int(tparts[0]),int(tparts[1]),int(tparts[2]))
     return retdt
@@ -31,6 +37,7 @@ def get_datetime2(dstr,tstr):
 # return the metadata for a particular site and day or error that there is no ROI file
 # there might be more than one!
 def roilookup(roimeta,sitename,imgdatetime):
+    
     matches = []
     for line in roimeta:
         tokens = line.split(',')

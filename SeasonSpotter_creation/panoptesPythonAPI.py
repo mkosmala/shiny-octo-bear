@@ -469,24 +469,38 @@ def create_workflow(projid,wfname,tasks,token):
 def create_subject(project_id,meta,filename,token):
     "Create a subject and return its ID"
 
-    values = """
+    values = u'''
     {
         "subjects": {
             "locations": [
                 "image/jpeg"
             ],
             "metadata": {
-            """ + meta + """
+            ''' + meta + u'''
             },
             "links": {
-                "project": \"""" + str(project_id) + """\"
+                "project": \"''' + unicode(str(project_id)) + u'''\"
             }
         }
-    }"""
+    }'''
+
+    #print "string?"
+    #print type(values) is str
+    #print "unicode?"
+    #print type(values) is unicode
+
+    #print values
+
+    strvalues = values.encode('ascii','xmlcharrefreplace')
+
+    #print "-----"
+    #print strvalues
+    #print "-----"
+
     head = {'Content-Type':'application/json',
             'Accept':'application/vnd.api+json; version=1',
             'Authorization':'Bearer '+token}
-    response = requests.post(hostapi+'subjects',headers=head,data=values)
+    response = requests.post(hostapi+'subjects',headers=head,data=strvalues)
 
     #print values
     #print "----"
@@ -501,7 +515,7 @@ def create_subject(project_id,meta,filename,token):
         print "Error: " + str(response.status_code)
         print "   " + response.text
         print "-----"
-        print "Tried to pass data: " + values
+        print "Tried to pass data: " + strvalues
         print "-----"
 
     # put it in json structure and extract id

@@ -41,31 +41,42 @@ with open(infilename,'r') as infile, open(outfilename,'w') as outfile:
         for csvfile in csvfiles:
             
             # get info on the ROI from CSV file name
-            roi_info = csvfile.split('_')
-            roi_type = roi_info[1]
-            roi_seqno = int(roi_info[2])
+            print csvfile
             
-            # read the csv file
-            with open(roidir+csvfile,'r') as metafile:
+            roi_info = csvfile.split('_')
 
-                # get the corresponding metadata
-                for csvline in metafile:
-                    csvline = csvline.rstrip()
+            # only use ROIs with 2-letter types
+            if len(roi_info[1])==2:
+
+                roi_type = roi_info[1]
+                roi_seqno = int(roi_info[2])
+            
+                # read the csv file
+                #print "reading " + roidir+csvfile
+                with open(roidir+csvfile,'r') as metafile:
+
+                    # get the corresponding metadata
+                    for csvline in metafile:
+                        csvline = csvline.rstrip()
                 
-                    if (len(csvline)>0 and
-                        csvline[0] != '#' and
-                        csvline[0:5] != "start"):
-                        meta = csvline.split(',')
+                        if (len(csvline)>0 and
+                            csvline[0] != '#' and
+                            csvline[0:5] != "start"):
+                            meta = csvline.split(',')
 
-                        roi_shift = int((meta[4].split('_'))[3][0:2])
+                            #print csvline
+                            #print meta
+                            #print "----"
 
-                        # print it to the file                
-                        outline = (site+","+roi_type+","+
-                                   str(roi_seqno)+","+str(roi_shift)+","+
-                                   meta[0]+","+meta[1]+","+meta[2]+","+meta[3]+","+
-                                   meta[4]+"\n")
+                            roi_shift = int((meta[4].split('_'))[3][0:2])
 
-                        outfile.write(outline)
+                            # print it to the file                
+                            outline = (site+","+roi_type+","+
+                                       str(roi_seqno)+","+str(roi_shift)+","+
+                                       meta[0]+","+meta[1]+","+meta[2]+","+meta[3]+","+
+                                       meta[4]+"\n")
+
+                            outfile.write(outline)
                 
                 
             
