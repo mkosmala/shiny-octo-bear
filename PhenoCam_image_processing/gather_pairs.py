@@ -9,7 +9,7 @@ import re
 # We will give the algorithm a two week buffer before sos and sof
 # and a two week buffer after eos and eof.
 #
-# We will pair images at 1, 3, and 7 day offsets.
+# We will pair images at 1, 3, and 7 day offsets (ideally).
 SOS_BUFFER = 14
 EOS_BUFFER = 14
 SOF_BUFFER = 14
@@ -26,18 +26,32 @@ def get_date(imgstr,ind=0):
 # return the line to output to file
 def prepare_data(imagesfilename,site,season,datediff,date1,date2):
 
+    #print site + "," + str(datediff) + "," + str(date1) + "," + str(date2)
+
     with open(imagesfilename,'r') as imagefile:
 
         # indicator of what we've found so far
         ind = 0 
+        foundSite = False
 
         # look for the proper images
         while ind < 2:
+
+            #print "while3"
+            #print ind
+            
             line = imagefile.readline().rstrip()
             tokens = line.split(',')
 
-            # look for the right site
+            #print line
+
             if tokens[0]==site:
+                foundSite = True
+            elif foundSite:
+                ind = 3
+
+            # look for the right site
+            if tokens[0]==site and tokens[1]=="DB":
 
                 # match the first 
                 if ind==0 and get_date(tokens[2])==date1:
@@ -49,10 +63,22 @@ def prepare_data(imagesfilename,site,season,datediff,date1,date2):
                     image2 = tokens[3]
                     ind = 2
 
+            # we won't find the image
+            if tokens[0]==site:
+                foundSite = True
+            elif foundSite:
+                ind = 3
+
+                
+
     # compose the data line
-    retline = (site + "," + tokens[1] + "," + season + "," +
+    retline = ""
+    if ind == 2:
+        retline = (site + "," + tokens[1] + "," + season + "," +
                str(datediff) + "," + str(date1) + "," + str(date2) + "," +
                image1 + "," + image2 + "\n")
+
+    #print retline
 
     return retline
    
@@ -86,6 +112,8 @@ with open(transitionsfilename,'r') as transfile, open(outfilename,'w') as outfil
         sof = get_date(tokens[5])
         eof = get_date(tokens[7])
 
+        #print line
+
         # these are our window dates
         springstart = sos - datetime.timedelta(SOS_BUFFER)
         springend = eos + datetime.timedelta(EOS_BUFFER)
@@ -95,19 +123,30 @@ with open(transitionsfilename,'r') as transfile, open(outfilename,'w') as outfil
         # for each date-differential, collect pairs
         for ddiff in DATEDIFF:
 
+            #print "ddiff = " + str(ddiff)
+
             # spring
             date1 = springstart
             date2 = springstart + datetime.timedelta(ddiff)
 
             while date2 <= springend:
 
+                #print "while1 " + str(date2) + ", " + str(springend)
+
                 # write to file
                 outline = prepare_data(imagesfilename,site,"spring",ddiff,date1,date2)
+
+                #print outline
+                
                 outfile.write(outline)
+
+                #print "  written"
 
                 # move forward one day
                 date1 = date1 + datetime.timedelta(1)
                 date2 = date2 + datetime.timedelta(1)
+
+                #print "  " + str(date2)
         
             # fall
             date1 = fallstart
@@ -115,9 +154,12 @@ with open(transitionsfilename,'r') as transfile, open(outfilename,'w') as outfil
 
             while date2 <= fallend:
 
+                #print "while2"
+
                 # write to file
                 outline = prepare_data(imagesfilename,site,"fall",ddiff,date1,date2)
-                outfile.write(outline)
+                if outline != "":
+                    outfile.write(outline)
 
                 # move forward one day
                 date1 = date1 + datetime.timedelta(1)

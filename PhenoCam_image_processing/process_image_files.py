@@ -63,6 +63,9 @@ with open(imagefilename,'r') as imagefile, open(outputfilename,'w') as ofile:
 
     # for each image file, process it
     for line in imagefile:
+
+        #print line
+        
         line = line.rstrip()
         tokens = line.split(',')
 
@@ -125,6 +128,11 @@ with open(imagefilename,'r') as imagefile, open(outputfilename,'w') as ofile:
             invimg = PIL.ImageOps.invert(transimg.convert("L"))
             
         # apply the mask to the image
+        #print img.size
+        #print allcolor.size
+        #print invimg.size
+
+        
         mimg = Image.composite(img,allcolor,invimg)
         outimg = Image.composite(mimg,outcolor,edgeimg)
 
