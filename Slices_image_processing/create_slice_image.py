@@ -445,17 +445,26 @@ def create_one_slice(sitename,outyear,imagesdir,outslicedir):
         [nc, nr] = img.size
         if (nr != nrow) or (nc != ncol):
             sys.stderr.write("Warning: image size changed.\n")
-        
+
+        # get centerline
+        cl_col = nc/2
+                    
         # read in 
         imarr = np.asarray(img)
 
+        # get column
+        colarr = imarr[:,cl_col,:]
+
+
         # make sure cl_col is still valid
-        if cl_col > nc:
+        #if cl_col >= nc:
             # use mid column of this image
-            midcol = nc/2
-            colarr = imarr[:,midcol,:]
-        else:
-            colarr = imarr[:,cl_col,:]
+        #    midcol = nc/2
+        #    colarr = imarr[:,midcol,:]
+        #else    
+        #    print "centerline column: " + str(cl_col)
+        #    print "image width: " + str(nc)
+        #    colarr = imarr[:,cl_col,:]
 
         # insert column into output array
         #column_index = imgdoy[1]-1

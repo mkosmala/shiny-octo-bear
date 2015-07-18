@@ -24,5 +24,7 @@ with open(slicefilename,'r') as slicefile:
         site = tokens[0]
         year = tokens[1]
 
+        print "Processing " + site + " for year " + year
+
         create_slice_image.create_one_slice(site,int(year),imagesdir,outputdir)
         
