@@ -41,53 +41,40 @@ def prepare_data(imagesfilename,site,season,datediff,date1,date2):
             #print ind
             
             line = imagefile.readline().rstrip()
+            tokens = line.split(',')
 
-            # end of file
-            if line=="":
-                ind=3
+            #print line
 
-            # keep going
-            else:
-        
-                tokens = line.split(',')
-    
-                fsite = tokens[0]         
-                fdate = tokens[1]
-                fveg = tokens[2]
-                fimage = tokens[4]
+            if tokens[0]==site:
+                foundSite = True
+            elif foundSite:
+                ind = 3
 
-                #print line
+            # look for the right site
+            if tokens[0]==site and tokens[1]=="DB":
 
-                if fsite==site:
-                    foundSite = True
-                elif foundSite:
-                    ind = 3
+                # match the first 
+                if ind==0 and get_date(tokens[2])==date1:
+                    image1 = tokens[3]
+                    ind = 1
 
-                # look for the right site
-                if fsite==site and fveg=="DB":
+                # match second
+                elif ind==1 and get_date(tokens[2])==date2:
+                    image2 = tokens[3]
+                    ind = 2
 
-                    # match the first 
-                    if ind==0 and get_date(fdate)==date1:
-                        image1 = fimage
-                        ind = 1
-
-                    # match second
-                    elif ind==1 and get_date(fdate)==date2:
-                        image2 = fimage
-                        ind = 2
-
-                # we won't find the image
-                if fsite==site:
-                    foundSite = True
-                elif foundSite:
-                    ind = 3
+            # we won't find the image
+            if tokens[0]==site:
+                foundSite = True
+            elif foundSite:
+                ind = 3
 
                 
 
     # compose the data line
     retline = ""
     if ind == 2:
-        retline = (site + "," + fveg + "," + season + "," +
+        retline = (site + "," + tokens[1] + "," + season + "," +
                str(datediff) + "," + str(date1) + "," + str(date2) + "," +
                image1 + "," + image2 + "\n")
 

@@ -529,8 +529,24 @@ def create_subject(project_id,meta,filename,token):
     # -----------
 
     head = {'Content-Type':'image/jpeg'}
-    with open(filename,'rb') as fp:
-        response = requests.put(signed_urls,headers=head,data=fp)
+
+    tries = 0
+    success = False
+
+    # try each image 5 times, then give up
+    while tries < 5 and success=False:
+        try:
+            with open(filename,'rb') as fp:
+                response = requests.put(signed_urls,headers=head,data=fp)
+                success = True
+        except requests.exceptions.ConnectionError:
+            print "Connection Error for " + filename 
+            print "Trying again."
+            tries = tries + 1
+
+    if not success:
+        print "Failed to upload image " + filename
+        exit(1)
     
     return subjid
 

@@ -6,26 +6,26 @@ import subprocess
 from PIL import Image
 import PIL.ImageOps
 
-if len(sys.argv) < 5 :
-    print ("format: glue_paried_images <images_file> <crop_info_file> <output_dir> <output_list_file>")
+if len(sys.argv) < 4 :
+    print ("format: glue_paired_images <images_file> <output_dir> <output_list_file>")
     exit(1)
 imagefilename = sys.argv[1]
-cropinfofilename = sys.argv[2]
-outputdir = sys.argv[3]
-outputfilename = sys.argv[4]
+outputdir = sys.argv[2]
+outputfilename = sys.argv[3]
 
+# we no longer do this here
 # read the crop info into a dictionary
-cropinfo = {}
-with open(cropinfofilename,'r') as cropinfofile:
+#cropinfo = {}
+#with open(cropinfofilename,'r') as cropinfofile:
 
     # remove header line
-    cropinfofile.readline()
+    #cropinfofile.readline()
 
     # save each line to the dictionary
-    for line in cropinfofile:
-        line = line.rstrip()
-        tokens = line.split(',')    
-        cropinfo[tokens[0]+tokens[1]] = (tokens[2],tokens[3])
+    #for line in cropinfofile:
+    #    line = line.rstrip()
+    #    tokens = line.split(',')    
+    #    cropinfo[tokens[0]+tokens[1]] = (tokens[2],tokens[3])
      
 # go through all the files
 with open(imagefilename,'r') as imagefile, open(outputfilename,'w') as ofile:
@@ -62,39 +62,50 @@ with open(imagefilename,'r') as imagefile, open(outputfilename,'w') as ofile:
             print line
             exit(1)
 
+        # cropping now done in pre-processing, so no longer do it here.
+
         # crop the data lines out of the images
-        info = cropinfo[site+date1[0:4]]
+        #info = cropinfo[site+date1[0:4]]
         
         # crop off the top
-        if (info[0]=="top"):
-            cropdim = (0,int(img1.size[1]*float(info[1])),img1.size[0],img1.size[1])
+        #if (info[0]=="top"):
+        #    cropdim = (0,int(img1.size[1]*float(info[1])),img1.size[0],img1.size[1])
         # crop off the bottom
-        else:
-            cropdim = (0,0,img1.size[0],int(img1.size[1]*(1-float(info[1]))))
+        #else:
+        #    cropdim = (0,0,img1.size[0],int(img1.size[1]*(1-float(info[1]))))
 
         # crop
-        img1 = img1.crop(cropdim)
-        img2 = img2.crop(cropdim)
+        #img1 = img1.crop(cropdim)
+        #img2 = img2.crop(cropdim)
+        
 
         # create canvases the height and double-width of the images
+        # actually, a bit more than double-width. We're going to do it
+        # double plus 2%, which creates a nice separation between the images
         # one canvas for the images chronologically
         # one canvas for the images reverse chronologically
-        canvas1 = Image.new("RGBA",(img1.size[0]*2,img1.size[1]),None)
-        canvas2 = Image.new("RGBA",(img1.size[0]*2,img1.size[1]),None)
+        doublewidth = int(img1.size[0]*2.02)
+        canvas1 = Image.new("RGBA",(doublewidth,img1.size[1]),None)
+        canvas2 = Image.new("RGBA",(doublewidth,img1.size[1]),None)
         
         # paste on the first image
+        rightlocation = int(img2.size[0]*1.02)
         canvas1.paste(img1,(0,0))
-        canvas2.paste(img1,(img2.size[0]+1,0))
+        canvas2.paste(img1,(rightlocation,0))
         
         # paste on the second image
-        canvas1.paste(img2,(img1.size[0]+1,0))
+        canvas1.paste(img2,(rightlocation,0))
         canvas2.paste(img2,(0,0))
 
-        # shrink these images so they fit nicely
-        newwidth = 720
-        newheight = int(720*float(img1.size[1])/float(2*img1.size[0]))
-        outimg1 = canvas1.resize((newwidth,newheight),PIL.Image.ANTIALIAS)
-        outimg2 = canvas2.resize((newwidth,newheight),PIL.Image.ANTIALIAS)
+        # shrink these images so they're not too big
+        if img1.size[0] >= 1200:
+            newwidth = 2400
+            newheight = int(newwidth*float(img1.size[1])/float(2*img1.size[0]))
+            outimg1 = canvas1.resize((newwidth,newheight),PIL.Image.ANTIALIAS)
+            outimg2 = canvas2.resize((newwidth,newheight),PIL.Image.ANTIALIAS)
+        else:
+            outimg1 = canvas1
+            outimg2 = canvas2
         
         # create output file names
         # file name will be first image, date diff, and chronology
